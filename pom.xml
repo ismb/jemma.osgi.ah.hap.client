@@ -31,6 +31,9 @@
 		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.15</org.energy-home.jemma.osgi.ah.m2m.device.version>
 		<org.energy-home.jemma.osgi.utils.version>1.0.6</org.energy-home.jemma.osgi.utils.version>
 		<javax.servlet.version>2.5.0</javax.servlet.version>
+		<org.slf4j.version>1.6.2</org.slf4j.version>
+		<org.eclipse.equinox.util.version>1.0.100</org.eclipse.equinox.util.version>			
+		<org.restlet.version>2.1.6</org.restlet.version>
 	</properties>
 
 	<build>
@@ -102,8 +105,13 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	
+	<repositories>
+		<repository>
+			<id>JemmaRepository</id>
+			<name>JEMMA Maven repository</name>
+			<url>http://ismb.github.io/jemma-maven-repository/maven</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.energy-home</groupId>
@@ -141,5 +149,30 @@
 			<version>${javax.servlet.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>osgi</artifactId>
+			<version>3.10.0-v20140606-1445</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>org.apache.httpcomponents.httpcore</artifactId>
+			<version>4.1.0</version>
+			<scope>compile</scope>
+		</dependency> 
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>org.apache.httpcomponents.httpclient</artifactId>
+			<version>4.1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		
 	</dependencies>
 </project>

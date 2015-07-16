@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1436459140890
+Bnd-LastModified: 1437079943810
 Build-Jdk: 1.8.0_45
 Built-By: tomasi
 Bundle-Activator: org.energy_home.jemma.osgi.ah.hap.client.HapCoreServic
@@ -33,14 +33,14 @@ Import-Package: org.energy_home.jemma.ah.cluster.zigbee.eh;version="[3.1
  t.http;version="[2.5,3)",org.slf4j;version="[1.6,2)",org.apache.http;ve
  rsion="4.1.0",org.apache.http.util;version="4.1.0",org.apache.http.enti
  ty;version="4.1.0",org.eclipse.osgi.framework.console;version="1.0.0",o
- rg.osgi.framework;version="[1.6,2)",org.osgi.service.component;version=
+ rg.osgi.framework;version="[1.5,2)",org.osgi.service.component;version=
  "[1.1,2)",org.osgi.service.http;version="[1.2,2)",org.energy_home.jemma
  .ah.cluster.ah;version="[3.0,4)",org.energy_home.jemma.ah.cluster.zigbe
  e.measurement;version="[3.0,4)",org.energy_home.jemma.ah.cluster.zigbee
  .security;version="[3.0,4)",org.energy_home.jemma.ah.hac.lib;version="[
  3.0,4)",org.energy_home.jemma.shal,org.energy_home.jemma.utils.rest;ver
- sion="[1.0,2)",org.apache.http.client;version="4.1.0",org.apache.common
- s.codec.binary,javax.servlet.resources;version="[2.5,3)"
+ sion="[1.0,2)",org.apache.commons.codec.binary,javax.servlet.resources;
+ version="[2.5,3)",org.apache.http.client;version="4.1.0"
 Require-Bundle: jemma.osgi.ah.hac.lib
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
 Service-Component: OSGI-INF/*.xml
