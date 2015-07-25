@@ -35,6 +35,8 @@
 		<org.eclipse.equinox.util.version>1.0.100</org.eclipse.equinox.util.version>			
 		<org.restlet.version>2.1.6</org.restlet.version>
 		<org.apache.commons.httpclient.version>3.1.0</org.apache.commons.httpclient.version>
+		<org.apache.httpcomponents.httpclient.version>4.1.0</org.apache.httpcomponents.httpclient.version>
+		<org.apache.httpcomponents.httpcore.version>4.1.0</org.apache.httpcomponents.httpcore.version>
 	</properties>
 
 	<build>
@@ -82,10 +84,10 @@
 							 javax.servlet.resources,
 							 org.apache.commons.codec.binary,
 							 org.slf4j,
-							 org.apache.http;version="4.1.0",
-							 org.apache.http.util;version="4.1.0",
-							 org.apache.http.entity;version="4.1.0",
-							 org.apache.http.client;version="4.1.0",
+							 org.apache.http;version="[4.1,5)",
+							 org.apache.http.util;version="[4.1,5)",
+							 org.apache.http.entity;version="[4.1,5)",
+							 org.apache.http.client;version="[4.1,5)",
 							 org.eclipse.osgi.framework.console,
 							 org.osgi.framework,
 							 org.osgi.service.component,
@@ -167,7 +169,18 @@
 			<artifactId>org.apache.commons.httpclient</artifactId>
 			<version>${org.apache.commons.httpclient.version}</version>
 			<scope>compile</scope>
-		</dependency>		
-		
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>org.apache.httpcomponents.httpclient</artifactId>
+			<version>${org.apache.httpcomponents.httpclient.version}</version>			
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>org.apache.httpcomponents.httpcore</artifactId>
+			<version>${org.apache.httpcomponents.httpcore.version}</version>			
+			<scope>compile</scope>
+		</dependency>					
 	</dependencies>
 </project>
