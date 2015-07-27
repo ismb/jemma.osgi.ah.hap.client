@@ -27,7 +27,7 @@
 	<name>Hap Client</name>
 
 	<properties>
-	
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- Internal dependencies version properties -->
 		<org.energy-home.jemma.osgi.ah.hac.lib.version>3.1.5</org.energy-home.jemma.osgi.ah.hac.lib.version>
 		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.16</org.energy-home.jemma.osgi.ah.m2m.device.version>
