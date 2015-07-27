@@ -23,20 +23,29 @@
 	<groupId>org.energy-home</groupId>
 	<artifactId>jemma.osgi.ah.hap.client</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.2.15</version>
+	<version>1.2.16</version>
 	<name>Hap Client</name>
 
 	<properties>
-		<org.energy-home.jemma.osgi.ah.hac.lib.version>3.1.4</org.energy-home.jemma.osgi.ah.hac.lib.version>
-		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.15</org.energy-home.jemma.osgi.ah.m2m.device.version>
-		<org.energy-home.jemma.osgi.utils.version>1.0.6</org.energy-home.jemma.osgi.utils.version>
-		<javax.servlet.version>2.5.0</javax.servlet.version>
-		<org.slf4j.version>1.6.2</org.slf4j.version>
-		<org.eclipse.equinox.util.version>1.0.100</org.eclipse.equinox.util.version>			
-		<org.restlet.version>2.1.6</org.restlet.version>
-		<org.apache.commons.httpclient.version>3.1.0</org.apache.commons.httpclient.version>
+	
+		<!-- Internal dependencies version properties -->
+		<org.energy-home.jemma.osgi.ah.hac.lib.version>3.1.5</org.energy-home.jemma.osgi.ah.hac.lib.version>
+		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.16</org.energy-home.jemma.osgi.ah.m2m.device.version>
+		<org.energy-home.jemma.osgi.utils.version>1.0.7</org.energy-home.jemma.osgi.utils.version>
+					
+		<!-- External dependencies version properties -->	
+		<javax.servlet2.version>2.5.0</javax.servlet2.version>
+		<org.apache.commons.httpclient.version>3.1.0</org.apache.commons.httpclient.version>		
 		<org.apache.httpcomponents.httpclient.version>4.1.0</org.apache.httpcomponents.httpclient.version>
-		<org.apache.httpcomponents.httpcore.version>4.1.0</org.apache.httpcomponents.httpcore.version>
+		<org.apache.httpcomponents.httpcore.version>4.1.0</org.apache.httpcomponents.httpcore.version>		
+		<org.eclipse.osgi.version>3.10.0</org.eclipse.osgi.version>		
+		<org.osgi.compendium.version>4.2.0</org.osgi.compendium.version>
+		<org.osgi.core.version>4.2.0</org.osgi.core.version>		
+		<org.slf4j.version>1.6.2</org.slf4j.version>
+	
+		<!-- Maven plugin version properties -->
+		<felix.bundle.plugin.version>2.5.3</felix.bundle.plugin.version>	
+
 	</properties>
 
 	<build>
@@ -52,7 +61,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>${felix.bundle.plugin.version}</version>
 				<extensions>true</extensions>				
 				<configuration>
 					<supportedProjectTypes>
@@ -116,6 +125,9 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	
+		<!-- Internal dependencies  -->	
+		
 		<dependency>
 			<groupId>org.energy-home</groupId>
 			<artifactId>jemma.osgi.ah.hac.lib</artifactId>
@@ -134,34 +146,13 @@
 			<version>${org.energy-home.jemma.osgi.utils.version}</version>
 			<type>bundle</type>
 		</dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>4.2.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.2.0</version>
-			<scope>compile</scope>
-		</dependency>
+		
+		<!-- External dependencies -->
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet</artifactId>
-			<version>${javax.servlet.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>osgi</artifactId>
-			<version>3.10.0-v20140606-1445</version>
+			<version>${javax.servlet2.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -181,6 +172,31 @@
 			<artifactId>org.apache.httpcomponents.httpcore</artifactId>
 			<version>${org.apache.httpcomponents.httpcore.version}</version>			
 			<scope>compile</scope>
-		</dependency>					
+		</dependency>				
+		<dependency>
+			<groupId>org.eclipse.osgi</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>${org.eclipse.osgi.version}</version>
+			<scope>compile</scope>
+		</dependency>				
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>${org.osgi.compendium.version}</version>
+			<scope>compile</scope>
+		</dependency>		
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>${org.osgi.core.version}</version>
+			<scope>compile</scope>
+		</dependency>		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>		
+			
 	</dependencies>
 </project>
