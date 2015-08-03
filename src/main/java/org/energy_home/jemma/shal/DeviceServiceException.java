@@ -19,7 +19,7 @@ public class DeviceServiceException extends Exception {
 	public DeviceServiceException() {
 		super();
 	}
-	
+
 	public DeviceServiceException(String description) {
 		super(description);
 	}

@@ -29,7 +29,7 @@ public class DeviceConfigurationImpl implements DeviceConfiguration {
 		this.category = category;
 		this.location = location;
 	}
-	
+
 	public String getNickname() {
 		return nickname;
 	}

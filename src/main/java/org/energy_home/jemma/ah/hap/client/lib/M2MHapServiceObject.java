@@ -38,7 +38,7 @@ public class M2MHapServiceObject implements IM2MHapService {
 			hapServiceManager.addListener(listener);
 		this.listener = listener;
 	}
-	
+
 	public M2MHapServiceObject() {
 		this.hapServiceManager = HapServiceManager.get();
 		hapServiceManager.addReference();
@@ -55,7 +55,7 @@ public class M2MHapServiceObject implements IM2MHapService {
 	public String getLocalHagId() {
 		return hapServiceManager.getLocalHagId(user);
 	}
-	
+
 	public boolean isConnected() {
 		return hapServiceManager.isConnected(user);
 	}
@@ -67,7 +67,7 @@ public class M2MHapServiceObject implements IM2MHapService {
 	public AHContainerAddress getContainerAddressFromUrl(String urlOrAddressedId) {
 		return AHM2MContainerAddress.getAddressFromUrl(urlOrAddressedId);
 	}
-	
+
 	public AHContainerAddress getContainerAddress(String containerName) {
 		return hapServiceManager.getContainerAddress(user, containerName);
 	}
@@ -75,27 +75,27 @@ public class M2MHapServiceObject implements IM2MHapService {
 	public AHContainerAddress getHagContainerAddress(String containerName) {
 		return hapServiceManager.getHagContainerAddress(user, containerName);
 	}
-	
+
 	public AHContainerAddress getLocalContainerAddress(String containerName) {
 		return hapServiceManager.getLocalContainerAddress(user, containerName);
 	}
-	
+
 	public AHContainerAddress getHagContainerAddress(String appliancePid, Integer endPointId, String containerName) {
 		return hapServiceManager.getHagContainerAddress(user, appliancePid, endPointId, containerName);
 	}
-	
+
 	public AHContainerAddress getLocalContainerAddress(String appliancePid, Integer endPointId, String containerName) {
 		return hapServiceManager.getLocalContainerAddress(user, appliancePid, endPointId, containerName);
 	}
-	
+
 	public AHContainerAddress getHagContainerAddress(String appliancePid, String endPointId, String containerName) {
 		return hapServiceManager.getHagContainerAddress(user, appliancePid, endPointId, containerName);
 	}
-	
+
 	public AHContainerAddress getLocalContainerAddress(String appliancePid, String endPointId, String containerName) {
 		return hapServiceManager.getLocalContainerAddress(user, appliancePid, endPointId, containerName);
 	}
-	
+
 	public ContentInstance getLatestContentInstance(AHContainerAddress containerId) throws M2MHapException {
 		return hapServiceManager.getContentInstance(user, containerId, M2MNetworkScl.CONTENT_INSTANCE_LATEST_ID);
 	}
@@ -103,53 +103,44 @@ public class M2MHapServiceObject implements IM2MHapService {
 	public ContentInstance getOldestContentInstance(AHContainerAddress containerId) throws M2MHapException {
 		return hapServiceManager.getContentInstance(user, containerId, M2MNetworkScl.CONTENT_INSTANCE_OLDEST_ID);
 	}
-	
+
 	public ContentInstance getContentInstance(AHContainerAddress containerId, long instanceId) throws M2MHapException {
 		return hapServiceManager.getContentInstance(user, containerId, instanceId);
 	}
 
-	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerId, long instanceId)
-			throws M2MHapException {
+	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerId, long instanceId) throws M2MHapException {
 		return hapServiceManager.getContentInstanceItemsList(user, containerId, instanceId);
 	}
 
-	public ContentInstanceItems getContentInstanceItems(AHContainerAddress containerId, long startInstanceId, long endInstanceId)
-			throws M2MHapException {
+	public ContentInstanceItems getContentInstanceItems(AHContainerAddress containerId, long startInstanceId, long endInstanceId) throws M2MHapException {
 		return hapServiceManager.getContentInstanceItems(user, containerId, startInstanceId, endInstanceId);
 	}
 
-	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerIdFilter, long startInstanceId,
-			long endInstanceId) throws M2MHapException {
+	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerIdFilter, long startInstanceId, long endInstanceId) throws M2MHapException {
 		return hapServiceManager.getContentInstanceItemsList(user, containerIdFilter, startInstanceId, endInstanceId);
 	}
 
-	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, long instanceId, Object content)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, long instanceId, Object content) throws M2MHapException {
 		return hapServiceManager.createContentInstanceBatch(user, containerId, instanceId, content);
 	}
 
-	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, ContentInstance contentInstance)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, ContentInstance contentInstance) throws M2MHapException {
 		return hapServiceManager.createContentInstanceBatch(user, containerId, contentInstance);
 	}
 
-	public ContentInstance createContentInstance(AHContainerAddress containerId, long instanceId, Object content)
-			throws M2MHapException {
+	public ContentInstance createContentInstance(AHContainerAddress containerId, long instanceId, Object content) throws M2MHapException {
 		return hapServiceManager.createContentInstance(user, containerId, instanceId, content);
 	}
 
-	public ContentInstance createContentInstance(AHContainerAddress containerId, ContentInstance contentInstance)
-			throws M2MHapException {
+	public ContentInstance createContentInstance(AHContainerAddress containerId, ContentInstance contentInstance) throws M2MHapException {
 		return hapServiceManager.createContentInstance(user, containerId, contentInstance);
 	}
-	
-	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, long instanceId, Object content, boolean sync)
-			throws M2MHapException {
+
+	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, long instanceId, Object content, boolean sync) throws M2MHapException {
 		return hapServiceManager.createContentInstanceQueued(user, containerId, instanceId, content, sync);
 	}
 
-	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, ContentInstance contentInstance, boolean sync)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, ContentInstance contentInstance, boolean sync) throws M2MHapException {
 		return hapServiceManager.createContentInstanceQueued(user, containerId, contentInstance, sync);
 	}
 
@@ -159,27 +150,23 @@ public class M2MHapServiceObject implements IM2MHapService {
 
 	public ContentInstanceItemsList getCachedLatestContentItemsList(AHContainerAddress containerIdFilter) throws M2MHapException {
 		return hapServiceManager.getCachedLatestContentInstanceItemsList(user, containerIdFilter);
-	}	
-	
-	
-	public ContentInstance getLocalContentInstance(AHContainerAddress containerAddressFilter) 
-			throws M2MHapException {
+	}
+
+	public ContentInstance getLocalContentInstance(AHContainerAddress containerAddressFilter) throws M2MHapException {
 		return hapServiceManager.getLocalContentInstance(user, containerAddressFilter);
 	}
-	
+
 	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddressFilter) throws M2MHapException {
 		return hapServiceManager.getLocalContentInstanceItemsList(user, containerAddressFilter);
 	}
-	
-	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddressFilter,
-			long startInstanceId, long endInstanceId) throws M2MHapException {
+
+	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddressFilter, long startInstanceId, long endInstanceId) throws M2MHapException {
 		return hapServiceManager.getLocalContentInstanceItemsList(user, containerAddressFilter, startInstanceId, endInstanceId);
 	}
-	
+
 	public void release() {
 		setListener(null);
 		hapServiceManager.removeReference();
 	}
-
 
 }

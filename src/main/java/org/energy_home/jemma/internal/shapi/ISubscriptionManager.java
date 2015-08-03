@@ -19,7 +19,7 @@ import org.energy_home.jemma.m2m.ContentInstanceItems;
 
 public interface ISubscriptionManager {
 	public boolean checkActiveSubscriptions();
-	
+
 	public void notifyContentInstanceItems(ContentInstanceItems ciItems);
-	
+
 }

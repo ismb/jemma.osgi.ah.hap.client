@@ -17,6 +17,6 @@ package org.energy_home.jemma.osgi.ah.hap.client;
 
 public interface IHapCoreService {
 	public String getLocalHagId();
-	
+
 	public boolean isConnected();
 }

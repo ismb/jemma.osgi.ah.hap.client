@@ -30,7 +30,7 @@ public class DeviceDescriptorImpl implements DeviceDescriptor {
 		this.networkType = networkType;
 		this.deviceInterfaceTypes = deviceInterfaceTypes;
 	}
-	
+
 	public DeviceType getDeviceType() {
 		return deviceType;
 	}
@@ -44,8 +44,7 @@ public class DeviceDescriptorImpl implements DeviceDescriptor {
 	}
 
 	public String toString() {
-		return "DeviceDescriptor [deviceType=" + deviceType + ", networkType=" + networkType + ", deviceInterfaceTypes="
-				+ Arrays.toString(deviceInterfaceTypes) + "]";
+		return "DeviceDescriptor [deviceType=" + deviceType + ", networkType=" + networkType + ", deviceInterfaceTypes=" + Arrays.toString(deviceInterfaceTypes) + "]";
 	}
 
 }

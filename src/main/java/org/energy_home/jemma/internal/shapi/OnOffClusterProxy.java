@@ -26,12 +26,9 @@ import org.energy_home.jemma.ah.hac.IServiceCluster;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 import org.energy_home.jemma.m2m.ContentInstance;
 
-
 public class OnOffClusterProxy extends ServiceClusterProxy implements OnOffClient {
 
-	public OnOffClusterProxy(ApplianceProxyList applianceProxyList,
-			AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public OnOffClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -40,7 +37,7 @@ public class OnOffClusterProxy extends ServiceClusterProxy implements OnOffClien
 			return AHContainers.attrId_ah_cluster_onoff_status;
 		return null;
 	}
-	
+
 	public void initServiceCluster(ApplianceProxy applianceProxy) {
 		IAppliance appliance = applianceProxy.getAppliance();
 		if (!appliance.isAvailable())
@@ -59,11 +56,11 @@ public class OnOffClusterProxy extends ServiceClusterProxy implements OnOffClien
 						sendAttributeValue(appliancePid, eps[j].getId(), OnOffServer.class.getName(), OnOffServer.ATTR_OnOff_NAME, av.getTimestamp(), av.getValue(), true);
 					}
 				} catch (Exception e) {
-					LOG.error("Error while reading last notified onoff attribute value for appliance " + appliancePid,e);
+					LOG.error("Error while reading last notified onoff attribute value for appliance " + appliancePid, e);
 				}
 		}
 	}
-	
+
 	public ContentInstance execCommand(String appliancePid, int endPointId, String containerName, ContentInstance ci) {
 		try {
 			ApplianceProxy applianceProxy = applianceProxyList.getApplianceProxy(appliancePid);
@@ -73,19 +70,19 @@ public class OnOffClusterProxy extends ServiceClusterProxy implements OnOffClien
 			IEndPoint endPoint = appliance.getEndPoint(endPointId);
 			if (containerName.equals(AHContainers.attrId_ah_cluster_onoff_status)) {
 				Boolean value = (Boolean) ci.getContent();
-				IServiceCluster onOffServer = endPoint.getServiceCluster(OnOffServer.class.getName()); 
+				IServiceCluster onOffServer = endPoint.getServiceCluster(OnOffServer.class.getName());
 				if (onOffServer != null && onOffServer.isAvailable()) {
 					if (value)
-						((OnOffServer)onOffServer).execOn(applianceProxy.getApplicationRequestContext());
+						((OnOffServer) onOffServer).execOn(applianceProxy.getApplicationRequestContext());
 					else
-						((OnOffServer)onOffServer).execOff(applianceProxy.getApplicationRequestContext());
+						((OnOffServer) onOffServer).execOff(applianceProxy.getApplicationRequestContext());
 				} else {
 					return null;
 				}
 			}
 			return ci;
 		} catch (Exception e) {
-			LOG.error("Error shile managing onoff command for appliance " + appliancePid + ", end point " + endPointId  + ", container " + containerName, e);
+			LOG.error("Error shile managing onoff command for appliance " + appliancePid + ", end point " + endPointId + ", container " + containerName, e);
 			return null;
 		}
 	}

@@ -32,7 +32,7 @@ public class DeviceInfoImpl implements DeviceInfo {
 		this.descriptor = descriptor;
 		this.configuration = configuration;
 	}
-	
+
 	public String getEndPointId() {
 		return endPointId;
 	}
@@ -50,8 +50,7 @@ public class DeviceInfoImpl implements DeviceInfo {
 	}
 
 	public String toString() {
-		return "DeviceInfo [endPointId=" + endPointId + ", persistentId=" + persistentId + ", descriptor=" + descriptor
-				+ ", configuration=" + configuration + "]";
+		return "DeviceInfo [endPointId=" + endPointId + ", persistentId=" + persistentId + ", descriptor=" + descriptor + ", configuration=" + configuration + "]";
 	}
 
 }

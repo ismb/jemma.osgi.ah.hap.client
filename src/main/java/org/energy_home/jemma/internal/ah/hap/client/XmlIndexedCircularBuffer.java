@@ -38,8 +38,7 @@ public class XmlIndexedCircularBuffer {
 		int fileNameLength = fileNameOrPath.length();
 		if (fileNameLength < INDEX_AND_EXTENSION_LENGTH + 1)
 			return null;
-		String strIndex = fileNameOrPath.substring(fileNameLength - INDEX_AND_EXTENSION_LENGTH,
-				fileNameLength - FILE_EXTENSION.length());
+		String strIndex = fileNameOrPath.substring(fileNameLength - INDEX_AND_EXTENSION_LENGTH, fileNameLength - FILE_EXTENSION.length());
 		return new Long(Long.parseLong(strIndex));
 	}
 
@@ -105,7 +104,7 @@ public class XmlIndexedCircularBuffer {
 					deleteFile(filePathPrefix, buffer.get(0));
 					buffer.remove(0);
 				}
-				
+
 				firstItem = null;
 				lastItem = null;
 				if (buffer.size() > 0) {

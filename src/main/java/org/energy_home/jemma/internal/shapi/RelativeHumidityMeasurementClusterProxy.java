@@ -20,10 +20,9 @@ import org.energy_home.jemma.ah.cluster.zigbee.measurement.RelativeHumidityMeasu
 import org.energy_home.jemma.ah.hac.ApplianceException;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 
-
 public class RelativeHumidityMeasurementClusterProxy extends ServiceClusterProxy implements RelativeHumidityMeasurementClient {
-	public RelativeHumidityMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public RelativeHumidityMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager)
+			throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -35,7 +34,7 @@ public class RelativeHumidityMeasurementClusterProxy extends ServiceClusterProxy
 
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeName, Object value) {
 		if (attributeName.equals(RelativeHumidityMeasurementServer.ATTR_MeasuredValue_NAME)) {
-			float floatValue = ((Integer)value).floatValue()/100;
+			float floatValue = ((Integer) value).floatValue() / 100;
 			return new Float(floatValue);
 		}
 		return value;

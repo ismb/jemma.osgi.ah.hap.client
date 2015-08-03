@@ -15,7 +15,6 @@
  */
 package org.energy_home.jemma.internal.shapi;
 
-
 import java.util.Calendar;
 
 import org.energy_home.jemma.ah.cluster.zigbee.eh.ApplianceControlClient;
@@ -34,11 +33,11 @@ import org.energy_home.jemma.m2m.ContentInstance;
 import org.energy_home.jemma.shal.DeviceConfiguration.DeviceCategory;
 
 public class ApplianceControlClusterProxy extends ServiceClusterProxy implements ApplianceControlClient {
-	public boolean isRemoteControlEnabled (short remoteEnabledFlags) {
+	public boolean isRemoteControlEnabled(short remoteEnabledFlags) {
 		int maskedValue = remoteEnabledFlags & 0xf;
 		return (maskedValue == 0x1 || maskedValue == 0xf);
 	}
-	
+
 	public short toApplianceCommand(short applianceStatus) {
 		short applianceCommand;
 		switch (applianceStatus) {
@@ -67,18 +66,18 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 		}
 		return applianceCommand;
 	}
-	
+
 	public synchronized long fromApplianceTime(int time, boolean returnMinutes) {
 		if (time == 0)
 			return 0;
-		boolean relative = (time & 0xC0) == 0; 
+		boolean relative = (time & 0xC0) == 0;
 		int hours = (time & 0xFF00) >> 8;
 		int minutes = time & 0x003F;
 		// Approximate to minutes
-		calendar.setTimeInMillis((System.currentTimeMillis()/60000)*60000);
+		calendar.setTimeInMillis((System.currentTimeMillis() / 60000) * 60000);
 		if (relative) {
-			if (returnMinutes) 
-				return minutes+hours*60;
+			if (returnMinutes)
+				return minutes + hours * 60;
 			calendar.add(Calendar.HOUR_OF_DAY, hours);
 			calendar.add(Calendar.MINUTE, minutes);
 		} else {
@@ -89,12 +88,12 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			long deltaMillisecs = calendar.getTimeInMillis() - System.currentTimeMillis();
 			if (deltaMillisecs < 0)
 				deltaMillisecs = 0;
-			return deltaMillisecs/60000;
+			return deltaMillisecs / 60000;
 		} else {
-			return calendar.getTimeInMillis();			
+			return calendar.getTimeInMillis();
 		}
 	}
-	
+
 	public synchronized int toApplianceTime(int relativeMinutes, boolean relative) {
 		int hours, minutes, mask, result;
 		if (relative) {
@@ -109,9 +108,10 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			minutes = calendar.get(Calendar.MINUTE);
 			mask = 0x40;
 		}
-		result = (hours << 8) | mask | (minutes & 0x3F); 
+		result = (hours << 8) | mask | (minutes & 0x3F);
 		return result;
 	}
+
 	public synchronized int toApplianceTime(long time, boolean relative) {
 		if (time == 0)
 			return 0;
@@ -121,12 +121,12 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 			int currentMinutes = calendar.get(Calendar.MINUTE);
 			calendar.setTimeInMillis(time);
-			hours = calendar.get(Calendar.HOUR_OF_DAY)-currentHour;
+			hours = calendar.get(Calendar.HOUR_OF_DAY) - currentHour;
 			if (hours < 0) {
 				hours = 0;
 			}
 			minutes = calendar.get(Calendar.MINUTE) - currentMinutes;
-			if (minutes < 0) { 
+			if (minutes < 0) {
 				if (hours == 0) {
 					minutes = 0;
 				} else {
@@ -141,18 +141,15 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			minutes = calendar.get(Calendar.MINUTE);
 			mask = 0x40;
 		}
-		result = (hours << 8) | mask | (minutes & 0x3F); 
+		result = (hours << 8) | mask | (minutes & 0x3F);
 		return result;
 	}
-	
+
 	private Calendar calendar;
-	
-	public ApplianceControlClusterProxy(
-			ApplianceProxyList applianceProxyList,
-			AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+
+	public ApplianceControlClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
-		calendar  = Calendar.getInstance();
+		calendar = Calendar.getInstance();
 	}
 
 	protected String getAttributeId(String attributeName) {
@@ -167,24 +164,23 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 
 	@Override
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeName, Object value) {
-		if (attributeName.equals(ApplianceControlServer.ATTR_StartTime_NAME) ||
-				attributeName.equals(ApplianceControlServer.ATTR_FinishTime_NAME) ||
-				attributeName.equals(ApplianceControlServer.ATTR_RemainingTime_NAME)) {
+		if (attributeName.equals(ApplianceControlServer.ATTR_StartTime_NAME) || attributeName.equals(ApplianceControlServer.ATTR_FinishTime_NAME)
+				|| attributeName.equals(ApplianceControlServer.ATTR_RemainingTime_NAME)) {
 			try {
 				if (attributeName.equals(ApplianceControlServer.ATTR_RemainingTime_NAME)) {
-					int time = (int) fromApplianceTime(((Integer)value).intValue(), true);
+					int time = (int) fromApplianceTime(((Integer) value).intValue(), true);
 					return new Integer(time);
 				} else {
-					long time = fromApplianceTime(((Integer)value).intValue(), false);
+					long time = fromApplianceTime(((Integer) value).intValue(), false);
 					return new Long(time);
 				}
 			} catch (Exception e) {
 				LOG.error("Error while notifying time attribute for appliance " + appliancePid + ", endPoint " + endPointId, e);
 			}
-		} 
+		}
 		return value;
 	}
-	
+
 	public void initServiceCluster(ApplianceProxy applianceProxy) {
 		IAppliance appliance = applianceProxy.getAppliance();
 		if (!appliance.isAvailable())
@@ -195,38 +191,38 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 		IServiceCluster serviceCluster;
 		IAttributeValue av;
 		for (int j = 1; j < eps.length; j++) {
-			serviceCluster = eps[j].getServiceCluster(ApplianceControlServer.class.getName());		
+			serviceCluster = eps[j].getServiceCluster(ApplianceControlServer.class.getName());
 			if (serviceCluster != null) {
 				try {
 					av = serviceCluster.getLastNotifiedAttributeValue(ApplianceControlServer.ATTR_StartTime_NAME, context);
 					if (av != null && av.getValue() != null) {
-						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), 
-								ApplianceControlServer.ATTR_StartTime_NAME, av.getTimestamp(), av.getValue(), true);
+						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), ApplianceControlServer.ATTR_StartTime_NAME, av.getTimestamp(),
+								av.getValue(), true);
 					}
 					av = serviceCluster.getLastNotifiedAttributeValue(ApplianceControlServer.ATTR_FinishTime_NAME, context);
 					if (av != null && av.getValue() != null) {
-						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), 
-								ApplianceControlServer.ATTR_FinishTime_NAME, av.getTimestamp(), av.getValue(), true);
+						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), ApplianceControlServer.ATTR_FinishTime_NAME, av.getTimestamp(),
+								av.getValue(), true);
 					}
 					av = serviceCluster.getLastNotifiedAttributeValue(ApplianceControlServer.ATTR_RemainingTime_NAME, context);
 					if (av != null && av.getValue() != null) {
-						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), 
-								ApplianceControlServer.ATTR_RemainingTime_NAME, av.getTimestamp(), av.getValue(), true);
+						sendAttributeValue(appliancePid, eps[j].getId(), ApplianceControlServer.class.getName(), ApplianceControlServer.ATTR_RemainingTime_NAME, av.getTimestamp(),
+								av.getValue(), true);
 					}
-					SignalStateResponse stateResponse = ((ApplianceControlServer)serviceCluster).execSignalState(applianceProxy.getApplicationRequestContext());
+					SignalStateResponse stateResponse = ((ApplianceControlServer) serviceCluster).execSignalState(applianceProxy.getApplicationRequestContext());
 					if (stateResponse != null) {
-						sendAttributeValue(appliancePid,  eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_status, 
-								System.currentTimeMillis(), stateResponse.ApplianceStatus, true);
-						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(), 
+						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_status, System.currentTimeMillis(), stateResponse.ApplianceStatus,
+								true);
+						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(),
 								isRemoteControlEnabled(stateResponse.RemoteEnableFlags), true);
 					}
 				} catch (Exception e) {
-					LOG.error("Error while reading last notified appliance control attribute values for appliance " + appliance.getPid(),e);
-				}				
+					LOG.error("Error while reading last notified appliance control attribute values for appliance " + appliance.getPid(), e);
+				}
 			}
-		}	
+		}
 	}
-	
+
 	public void checkServiceCluster(ApplianceProxy applianceProxy) {
 		IAppliance appliance = applianceProxy.getAppliance();
 		if (!appliance.isAvailable())
@@ -240,19 +236,18 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 				try {
 					SignalStateResponse stateResponse = applianceControlServer.execSignalState(applianceProxy.getApplicationRequestContext());
 					if (stateResponse != null) {
-						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_status, System.currentTimeMillis(), 
-								stateResponse.ApplianceStatus, true);
-						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(), 
+						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_status, System.currentTimeMillis(), stateResponse.ApplianceStatus,
+								true);
+						sendAttributeValue(appliancePid, eps[j].getId(), AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(),
 								isRemoteControlEnabled(stateResponse.RemoteEnableFlags), true);
 					}
 				} catch (Exception e) {
-					LOG.error("Error while retrieving appliance status for appliance" + appliance.getPid(),e);
+					LOG.error("Error while retrieving appliance status for appliance" + appliance.getPid(), e);
 				}
 		}
 	}
-	
-	public ContentInstance execCommand(String appliancePid, int endPointId, String containerName, ContentInstance ci) 
-			throws ApplianceException, ServiceClusterException {
+
+	public ContentInstance execCommand(String appliancePid, int endPointId, String containerName, ContentInstance ci) throws ApplianceException, ServiceClusterException {
 		ApplianceProxy applianceProxy = applianceProxyList.getApplianceProxy(appliancePid);
 		IAppliance appliance = applianceProxy.getAppliance();
 		if (!appliance.isAvailable())
@@ -265,8 +260,8 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			if (applianceControl != null && applianceControl.isAvailable()) {
 				short command = toApplianceCommand(value.shortValue());
 				if (command > 0)
-					((ApplianceControlServer)applianceControl).execCommandExecution(command,  applianceProxy.getApplicationRequestContext());
-				else 
+					((ApplianceControlServer) applianceControl).execCommandExecution(command, applianceProxy.getApplicationRequestContext());
+				else
 					return null;
 			} else {
 				return null;
@@ -277,10 +272,14 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			if (applianceControl != null && applianceControl.isAvailable()) {
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_StartTime_NAME;
-				record.value = toApplianceTime(value, true); //deviceCategory == null || !(deviceCategory == deviceCategory.Oven));
+				record.value = toApplianceTime(value, true); // deviceCategory
+																// == null ||
+																// !(deviceCategory
+																// ==
+																// deviceCategory.Oven));
 				IEndPointRequestContext epCtxt = applianceProxy.getApplicationRequestContext();
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, epCtxt);
-				((ApplianceControlServer)applianceControl).execCommandExecution((short)0x01, epCtxt);
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, epCtxt);
+				((ApplianceControlServer) applianceControl).execCommandExecution((short) 0x01, epCtxt);
 
 			} else {
 				return null;
@@ -291,8 +290,12 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			if (applianceControl != null && applianceControl.isAvailable()) {
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_FinishTime_NAME;
-				record.value = toApplianceTime(value, true); // deviceCategory == null || !(deviceCategory == deviceCategory.Oven));
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				record.value = toApplianceTime(value, true); // deviceCategory
+																// == null ||
+																// !(deviceCategory
+																// ==
+																// deviceCategory.Oven));
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
@@ -302,8 +305,12 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 			if (applianceControl != null && applianceControl.isAvailable()) {
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_RemainingTime_NAME;
-				record.value = toApplianceTime(value, true);// deviceCategory == null || !(deviceCategory == deviceCategory.Oven));
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				record.value = toApplianceTime(value, true);// deviceCategory ==
+															// null ||
+															// !(deviceCategory
+															// ==
+															// deviceCategory.Oven));
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
@@ -314,7 +321,7 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_CycleTarget0_NAME;
 				record.value = value;
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
@@ -325,7 +332,7 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_CycleTarget1_NAME;
 				record.value = value;
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
@@ -336,7 +343,7 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_TemperatureTarget0_NAME;
 				record.value = value;
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
@@ -347,30 +354,26 @@ public class ApplianceControlClusterProxy extends ServiceClusterProxy implements
 				WriteAttributeRecord record = new WriteAttributeRecord();
 				record.name = ApplianceControlServer.ATTR_TemperatureTarget1_NAME;
 				record.value = value;
-				((ApplianceControlServer)applianceControl).execWriteFunctions(new WriteAttributeRecord[] {record}, applianceProxy.getApplicationRequestContext());
+				((ApplianceControlServer) applianceControl).execWriteFunctions(new WriteAttributeRecord[] { record }, applianceProxy.getApplicationRequestContext());
 			} else {
 				return null;
 			}
 		}
 		return ci;
 	}
-	
 
-	public void execSignalStateNotification(short ApplianceStatus,
-			short RemoteEnableFlags, int ApplianceStatus2,
-			IEndPointRequestContext context) throws ApplianceException,
+	public void execSignalStateNotification(short ApplianceStatus, short RemoteEnableFlags, int ApplianceStatus2, IEndPointRequestContext context) throws ApplianceException,
 			ServiceClusterException {
 		IEndPoint peerEndPoint = context.getPeerEndPoint();
 		int endPointId = peerEndPoint.getId();
 		String appliancePid = peerEndPoint.getAppliance().getPid();
 		try {
-			sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applctrl_status, System.currentTimeMillis(),
-				new Short(ApplianceStatus), true);
-			sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(), 
+			sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applctrl_status, System.currentTimeMillis(), new Short(ApplianceStatus), true);
+			sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applctrl_remoteControlEnabled, System.currentTimeMillis(),
 					isRemoteControlEnabled(RemoteEnableFlags), true);
 		} catch (Exception e) {
 			LOG.error("Error while receiving signal state notification appliance status for appliance " + appliancePid + ", endPoint " + endPointId, e);
-		}	
+		}
 	}
 
 }

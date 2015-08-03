@@ -15,19 +15,19 @@
  */
 package org.energy_home.jemma.shal;
 
-public interface DeviceDescriptor {	
+public interface DeviceDescriptor {
 	public enum DeviceType {
-		Other, SmartPlug, Meter, WhiteGood, EnergyManagementSystem, WINDOW_COVERING, DOOR_LOCK		
+		Other, SmartPlug, Meter, WhiteGood, EnergyManagementSystem, WINDOW_COVERING, DOOR_LOCK
 	}
 
 	public enum NetworkType {
-		Local, ZigBee, SEP2, KNX, Modbus		
-	}	
+		Local, ZigBee, SEP2, KNX, Modbus
+	}
 
 	public DeviceType getDeviceType();
 
 	public NetworkType getNetworkType();
-	
+
 	public String[] getImplementedDeviceInterfaceTypes();
-	
+
 }

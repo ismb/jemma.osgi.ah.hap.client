@@ -18,16 +18,16 @@ package org.energy_home.jemma.shal;
 //***** OSGi service associated to a client application in the OSGi framework
 public interface DeviceListener extends EndPoint {
 
-	public void notifyDeviceAdded (DeviceInfo info);
-	
-	public void notifyDeviceRemoved (DeviceInfo info);
+	public void notifyDeviceAdded(DeviceInfo info);
 
-	public void notifyDeviceServiceAvailable (DeviceInfo info, DeviceService deviceService);
-	
-	public void notifyDeviceServiceUnavailable (DeviceInfo info);
-	
-	public void notifyDeviceDescriptorUpdated (DeviceInfo info);
-	
-	public void notifyDeviceConfigurationUpdated (DeviceInfo info);
+	public void notifyDeviceRemoved(DeviceInfo info);
+
+	public void notifyDeviceServiceAvailable(DeviceInfo info, DeviceService deviceService);
+
+	public void notifyDeviceServiceUnavailable(DeviceInfo info);
+
+	public void notifyDeviceDescriptorUpdated(DeviceInfo info);
+
+	public void notifyDeviceConfigurationUpdated(DeviceInfo info);
 
 }

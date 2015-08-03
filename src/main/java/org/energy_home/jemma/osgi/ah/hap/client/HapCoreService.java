@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
 
 public class HapCoreService extends M2MHapServiceObject implements BundleActivator, CommandProvider, IHapCoreService, M2MHapServiceListener {
 
-	private static final Logger LOG = LoggerFactory.getLogger( HapCoreService.class );
-	
+	private static final Logger LOG = LoggerFactory.getLogger(HapCoreService.class);
+
 	private static long REAL_START_TIME = System.currentTimeMillis();
 	private static long EMULATED_START_TIME = 0;
 
@@ -56,7 +56,7 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 			EMULATED_START_TIME = c.getTimeInMillis();
 		}
 	}
-	
+
 	private BundleContext bc = null;
 	private ServiceRegistration cmdProviderServiceRegistration = null;
 	private ServiceRegistration hapBasicServiceRegistration = null;
@@ -97,8 +97,7 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 		return timestamp.longValue();
 	}
 
-	private void contentInstanceStoreAttributeValue(CommandInterpreter ci, String containerUrl, ContentInstance value,
-			long timestamp, boolean isBatch) throws M2MHapException {
+	private void contentInstanceStoreAttributeValue(CommandInterpreter ci, String containerUrl, ContentInstance value, long timestamp, boolean isBatch) throws M2MHapException {
 		contentInstance.setId(new Long(timestamp));
 		AHContainerAddress containerId = AHContainerAddress.getAddressFromUrl(containerUrl);
 		ContentInstance result = null;
@@ -150,8 +149,8 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 		}
 	}
 
-	private void contentInstancesQuery(CommandInterpreter ci, String containerUrl, long startInstanceId, long endInstanceId,
-			int calendarField, int calendarValue, boolean isCalendarQuery) {
+	private void contentInstancesQuery(CommandInterpreter ci, String containerUrl, long startInstanceId, long endInstanceId, int calendarField, int calendarValue,
+			boolean isCalendarQuery) {
 		AHContainerAddress containerId = null;
 		try {
 			containerId = AHContainerAddress.getAddressFromUrl(containerUrl);
@@ -180,27 +179,27 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 		this.bc = bc;
 		setUser(null);
 		setListener(this);
-		
+
 		Hashtable props = new Hashtable();
 		props.put("osgi.command.scope", "hap");
-		
+
 		cmdProviderServiceRegistration = bc.registerService(CommandProvider.class.getName(), this, props);
 		hapBasicServiceRegistration = bc.registerService(IHapCoreService.class.getName(), this, null);
 	}
 
-	public synchronized void stop(BundleContext bc) throws Exception {	
+	public synchronized void stop(BundleContext bc) throws Exception {
 		if (hapBasicServiceRegistration != null) {
 			hapBasicServiceRegistration.unregister();
-		hapBasicServiceRegistration = null;
-		
-		if (cmdProviderServiceRegistration != null)
-			cmdProviderServiceRegistration.unregister();
+			hapBasicServiceRegistration = null;
+
+			if (cmdProviderServiceRegistration != null)
+				cmdProviderServiceRegistration.unregister();
 		}
 		cmdProviderServiceRegistration = null;
-		
+
 		release();
 	}
-	
+
 	public synchronized void serviceReset() {
 		LOG.debug("Hap service reset");
 		if (hapBasicServiceRegistration != null) {
@@ -215,8 +214,8 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 
 	public void hagDisconnected() {
 		LOG.debug("Hag disconnected");
-	}	
-	
+	}
+
 	public void _hap(CommandInterpreter ci) {
 		String command = ci.nextArgument();
 		Method method = null;
@@ -542,20 +541,16 @@ public class HapCoreService extends M2MHapServiceObject implements BundleActivat
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyAvg 120 143", // Friday
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyAvg 144 167", // Saturday
 				// Esp cost containers test
-				"hap cli FloatCDV", "hap sli Duration 120000", "hap sli Value 0.01",
-				"hap cb ah.app.1234567890123450/1/ah.eh.esp.energyCost" + strNow, "hap cli FloatCDV", "hap sli Duration 5400000",
-				"hap sli Value 0.1", "hap sli Min 0.075", "hap sli Max 0.125",
-				"hap cb ah.app.1234567890123450/1/ah.eh.esp.energyCost" + strNow,
-				"hap gi ah.app.1234567890123450/1/ah.eh.esp.energyCost LATEST",
-				"hap qi ah.app.1234567890123450/1/ah.eh.esp.hourlyEnergyCost" + strNowQuery + strNowQuery,
+				"hap cli FloatCDV", "hap sli Duration 120000", "hap sli Value 0.01", "hap cb ah.app.1234567890123450/1/ah.eh.esp.energyCost" + strNow, "hap cli FloatCDV",
+				"hap sli Duration 5400000", "hap sli Value 0.1", "hap sli Min 0.075", "hap sli Max 0.125", "hap cb ah.app.1234567890123450/1/ah.eh.esp.energyCost" + strNow,
+				"hap gi ah.app.1234567890123450/1/ah.eh.esp.energyCost LATEST", "hap qi ah.app.1234567890123450/1/ah.eh.esp.hourlyEnergyCost" + strNowQuery + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.hourlyEnergyCost" + strOneDayAgo + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.dailyEnergyCost" + strNowQuery + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.dailyEnergyCost" + strOneWeekAgo + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.dailyEnergyCost" + strOneMonthAgo + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.dailyEnergyCost" + strOneMonthAgo + strNowQuery,
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.monthlyEnergyCost" + strOneYearAgo + strNowQuery,
-				"hap qi ALL/1/ah.eh.esp.monthlyEnergyCost" + strNowQuery + strNowQuery,
-				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyCostAvg 0 23", // Sunday
+				"hap qi ALL/1/ah.eh.esp.monthlyEnergyCost" + strNowQuery + strNowQuery, "hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyCostAvg 0 23", // Sunday
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyCostAvg 24 47", // Monday
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyCostAvg 48 71", // Tuesday
 				"hap qi ah.app.1234567890123450/1/ah.eh.esp.wdHourlyEnergyCostAvg 72 95", // Wednesday

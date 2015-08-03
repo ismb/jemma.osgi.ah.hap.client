@@ -19,6 +19,6 @@ import org.energy_home.jemma.m2m.ContentInstanceItems;
 
 public interface IM2MLocalListener {
 	public AHContainerAddress getContainerAddressFilter();
-	
+
 	public void notifyContentInstanceItems(ContentInstanceItems contentInstanceItems);
 }

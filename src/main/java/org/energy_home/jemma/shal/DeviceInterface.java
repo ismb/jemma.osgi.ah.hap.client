@@ -16,7 +16,9 @@
 package org.energy_home.jemma.shal;
 
 public interface DeviceInterface {
-	// For each device interface all attributes and events are notified to all registered listeners
+	// For each device interface all attributes and events are notified to all
+	// registered listeners
 	public void addListener(RequestContext context, DeviceInterfaceListener listener);
+
 	public void removeListener(RequestContext context);
 }

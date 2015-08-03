@@ -25,8 +25,7 @@ public class AHM2MContainerAddress extends AHContainerAddress {
 		super(urlOrAddressedId);
 	}
 
-	public AHM2MContainerAddress(String hagId, String appliancePid, String endPointId, String containerName, boolean isLocal,
-			boolean isProxy) throws IllegalArgumentException {
+	public AHM2MContainerAddress(String hagId, String appliancePid, String endPointId, String containerName, boolean isLocal, boolean isProxy) throws IllegalArgumentException {
 		super(hagId, appliancePid, endPointId, containerName, isLocal, isProxy);
 	}
 

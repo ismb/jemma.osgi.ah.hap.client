@@ -16,12 +16,15 @@
 package org.energy_home.jemma.shal;
 
 public interface EndPoint {
-	// Mandatory property for the DeviceListener OSGi service (specifies an array of strings with all requested services)
+	// Mandatory property for the DeviceListener OSGi service (specifies an
+	// array of strings with all requested services)
 	public static final String END_POINT_CLIENT_SERVICE_TYPES_PROPERTY = "shal.client.interfaces";
-	
-	// Each id is composed by a prefix associated to the HAN network and a unique id of the device (e.g. mac address):
+
+	// Each id is composed by a prefix associated to the HAN network and a
+	// unique id of the device (e.g. mac address):
 	// zigbee.<mac address>/<end point id>
-	// A specific prexic can be used to identify appliancation components: app.<unique id>/<numeric id> 
+	// A specific prexic can be used to identify appliancation components:
+	// app.<unique id>/<numeric id>
 	// (es. app.esp, app.aal, app.esp/1)
 	public String getEndPointId();
 }

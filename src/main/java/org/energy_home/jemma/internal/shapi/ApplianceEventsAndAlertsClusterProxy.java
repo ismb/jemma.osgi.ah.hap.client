@@ -22,37 +22,32 @@ import org.energy_home.jemma.ah.hac.IEndPointRequestContext;
 import org.energy_home.jemma.ah.hac.ServiceClusterException;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 
-
 public class ApplianceEventsAndAlertsClusterProxy extends ServiceClusterProxy implements ApplianceEventsAndAlertsClient {
 
-	public ApplianceEventsAndAlertsClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public ApplianceEventsAndAlertsClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager)
+			throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
-	
-	public void execAlertsNotification(int[] alerts, IEndPointRequestContext context) throws ApplianceException,
-			ServiceClusterException {
+
+	public void execAlertsNotification(int[] alerts, IEndPointRequestContext context) throws ApplianceException, ServiceClusterException {
 		IEndPoint peerEndPoint = context.getPeerEndPoint();
 		int endPointId = peerEndPoint.getId();
 		String appliancePid = peerEndPoint.getAppliance().getPid();
 		try {
 			if (alerts.length > 0) {
-				super.sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applevents_alerts, System.currentTimeMillis(),
-						new Integer(alerts[0]), true);
+				super.sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applevents_alerts, System.currentTimeMillis(), new Integer(alerts[0]), true);
 			}
 		} catch (Exception e) {
 			LOG.error("Error while receiving execAlertsNotification for appliance " + appliancePid + ", endPoint " + endPointId, e);
-		}		
+		}
 	}
 
-	public void execEventNotification(short EventHeader, short EventIdentification, IEndPointRequestContext context)
-			throws ApplianceException, ServiceClusterException {
+	public void execEventNotification(short EventHeader, short EventIdentification, IEndPointRequestContext context) throws ApplianceException, ServiceClusterException {
 		IEndPoint peerEndPoint = context.getPeerEndPoint();
 		int endPointId = peerEndPoint.getId();
 		String appliancePid = peerEndPoint.getAppliance().getPid();
 		try {
-			super.sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applevents_event, System.currentTimeMillis(),
-				new Short(EventIdentification), true);
+			super.sendAttributeValue(appliancePid, endPointId, AHContainers.attrId_ah_cluster_applevents_event, System.currentTimeMillis(), new Short(EventIdentification), true);
 		} catch (Exception e) {
 			LOG.error("Error while receiving execAlertsNotification for appliance " + appliancePid + ", endPoint " + endPointId, e);
 		}

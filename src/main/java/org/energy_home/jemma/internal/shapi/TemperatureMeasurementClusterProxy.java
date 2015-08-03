@@ -20,10 +20,9 @@ import org.energy_home.jemma.ah.cluster.zigbee.measurement.TemperatureMeasuremen
 import org.energy_home.jemma.ah.hac.ApplianceException;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 
-
 public class TemperatureMeasurementClusterProxy extends ServiceClusterProxy implements TemperatureMeasurementClient {
-	public TemperatureMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public TemperatureMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager)
+			throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -35,7 +34,7 @@ public class TemperatureMeasurementClusterProxy extends ServiceClusterProxy impl
 
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeName, Object value) {
 		if (attributeName.equals(TemperatureMeasurementServer.ATTR_MeasuredValue_NAME)) {
-			float floatValue = ((Integer)value).floatValue()/100;
+			float floatValue = ((Integer) value).floatValue() / 100;
 			return new Float(floatValue);
 		}
 		return value;

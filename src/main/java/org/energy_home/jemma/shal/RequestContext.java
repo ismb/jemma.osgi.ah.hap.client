@@ -17,34 +17,34 @@ package org.energy_home.jemma.shal;
 
 public class RequestContext {
 	public static final long NO_REQUEST_TIME = -1;
-	
+
 	private EndPoint endPoint;
 	private long time = NO_REQUEST_TIME;
-	
+
 	private void initEndPoint(EndPoint endPoint) {
-		if (endPoint != null && 
-				(endPoint instanceof DeviceService || endPoint instanceof DeviceListener))
+		if (endPoint != null && (endPoint instanceof DeviceService || endPoint instanceof DeviceListener))
 			this.endPoint = endPoint;
 		else
 			throw new IllegalArgumentException("End point parameter must be a DeviceService or DeviceListener implementation");
 	}
-	
+
 	public RequestContext(EndPoint endPoint) {
 		initEndPoint(endPoint);
 	}
-	
+
 	public RequestContext(EndPoint endPoint, long time) {
 		this.time = time;
 		initEndPoint(endPoint);
 	}
-	
+
 	public final String getCallerEndPointId() {
-		// TODO: check on registered services (DeviceService and DeviceServiceListeners), e.g. throw a static method of CommonServices 
+		// TODO: check on registered services (DeviceService and
+		// DeviceServiceListeners), e.g. throw a static method of CommonServices
 		return endPoint.getEndPointId();
 	}
-	
+
 	public final long getRequestTime() {
 		return time;
 	}
-	
+
 }

@@ -17,10 +17,10 @@ package org.energy_home.jemma.shal;
 
 public interface DeviceLocation {
 	public enum RoomCategory {
-		Other, Kitchen, Studio, Garden, Bathroom, Bedroom, LivingRoom, Lab, Hall, Corridor  
+		Other, Kitchen, Studio, Garden, Bathroom, Bedroom, LivingRoom, Lab, Hall, Corridor
 	}
-	
+
 	public String getRoomId();
-	
+
 	public RoomCategory getRoomCategory();
 }

@@ -20,11 +20,9 @@ import org.energy_home.jemma.ah.cluster.zigbee.measurement.OccupancySensingServe
 import org.energy_home.jemma.ah.hac.ApplianceException;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 
-
 public class OccupacySensingClusterProxy extends ServiceClusterProxy implements OccupancySensingClient {
 
-	public OccupacySensingClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public OccupacySensingClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -36,13 +34,10 @@ public class OccupacySensingClusterProxy extends ServiceClusterProxy implements 
 
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeName, Object value) {
 		if (attributeName.equals(OccupancySensingServer.ATTR_Occupancy_NAME)) {
-			boolean booleanValue = (((Short) value) & 0x01 ) > 0;
+			boolean booleanValue = (((Short) value) & 0x01) > 0;
 			return new Boolean(booleanValue);
 		}
 		return value;
 	}
-	
+
 }
-
-
-

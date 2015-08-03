@@ -41,7 +41,7 @@ public class HapServiceComponent extends M2MHapServiceObject implements IM2MHapS
 		if (dateTimeService == null || !dateTimeService.isDateTimeOk())
 			throw new M2MHapException("Invalid current date/time");
 	}
-	
+
 	public void start(ComponentContext context) {
 		bundle = context.getUsingBundle();
 		String user = getId(bundle);
@@ -55,15 +55,15 @@ public class HapServiceComponent extends M2MHapServiceObject implements IM2MHapS
 	public void hapCoreServiceStarted(IHapCoreService hapService) {
 		return;
 	}
-	
+
 	public void hapCoreServiceStopped(IHapCoreService hapService) {
 		return;
-	}	
-	
+	}
+
 	public void setDateTimeService(DateTimeService dateTimeService) {
 		this.dateTimeService = dateTimeService;
 	}
-	
+
 	public void unsetDateTimeService(DateTimeService dateTimeService) {
 		this.dateTimeService = null;
 	}
@@ -73,56 +73,47 @@ public class HapServiceComponent extends M2MHapServiceObject implements IM2MHapS
 		return super.getContentInstance(containerId, instanceId);
 	}
 
-	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerId, long instanceId)
-			throws M2MHapException {
+	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerId, long instanceId) throws M2MHapException {
 		checkDateTime();
 		return super.getContentInstanceItemsList(containerId, instanceId);
 	}
 
-	public ContentInstanceItems getContentInstanceItems(AHContainerAddress containerId, long startInstanceId, long endInstanceId)
-			throws M2MHapException {
+	public ContentInstanceItems getContentInstanceItems(AHContainerAddress containerId, long startInstanceId, long endInstanceId) throws M2MHapException {
 		checkDateTime();
 		return super.getContentInstanceItems(containerId, startInstanceId, endInstanceId);
 	}
 
-	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerIdFilter, long startInstanceId,
-			long endInstanceId) throws M2MHapException {
+	public ContentInstanceItemsList getContentInstanceItemsList(AHContainerAddress containerIdFilter, long startInstanceId, long endInstanceId) throws M2MHapException {
 		checkDateTime();
 		return super.getContentInstanceItemsList(containerIdFilter, startInstanceId, endInstanceId);
 	}
 
-	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, long instanceId, Object content)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, long instanceId, Object content) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstanceBatch(containerId, instanceId, content);
 	}
 
-	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, ContentInstance contentInstance)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceBatch(AHContainerAddress containerId, ContentInstance contentInstance) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstanceBatch(containerId, contentInstance);
 	}
-	
-	public ContentInstance createContentInstance(AHContainerAddress containerId, long instanceId, Object content)
-			throws M2MHapException {
+
+	public ContentInstance createContentInstance(AHContainerAddress containerId, long instanceId, Object content) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstance(containerId, instanceId, content);
 	}
 
-	public ContentInstance createContentInstance(AHContainerAddress containerId, ContentInstance contentInstance)
-			throws M2MHapException {
+	public ContentInstance createContentInstance(AHContainerAddress containerId, ContentInstance contentInstance) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstance(containerId, contentInstance);
 	}
 
-	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, long instanceId, Object content, boolean sync)
-			throws M2MHapException {
+	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, long instanceId, Object content, boolean sync) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstanceQueued(containerId, instanceId, content, sync);
 	}
-	
-	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, ContentInstance contentInstance, boolean sync)
-			throws M2MHapException {
+
+	public ContentInstance createContentInstanceQueued(AHContainerAddress containerId, ContentInstance contentInstance, boolean sync) throws M2MHapException {
 		checkDateTime();
 		return super.createContentInstanceQueued(containerId, contentInstance, sync);
 	}

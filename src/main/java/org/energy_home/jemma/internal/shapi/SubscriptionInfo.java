@@ -15,7 +15,6 @@
  */
 package org.energy_home.jemma.internal.shapi;
 
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -33,7 +32,7 @@ public class SubscriptionInfo {
 		String addressedIdFilter = subscription.getAddressedIdFilter();
 		try {
 			if (addressedIdFilter != null)
-				containerAddressFilter = new AHM2MContainerAddress(addressedIdFilter);			
+				containerAddressFilter = new AHM2MContainerAddress(addressedIdFilter);
 		} catch (Exception e) {
 			containerAddressFilter = null;
 		}

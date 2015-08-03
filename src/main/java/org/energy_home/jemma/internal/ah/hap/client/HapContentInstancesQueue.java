@@ -40,18 +40,18 @@ public class HapContentInstancesQueue {
 		// in all ah jaxb generated classes (add an xml common object class?)
 		if (content1 == null && content2 == null)
 			return true;
-		if ((content1 == null && content2 != null) ||
-				(content1 != null && content2 == null))
+		if ((content1 == null && content2 != null) || (content1 != null && content2 == null))
 			return false;
 		if (content1.getClass().equals(content2.getClass()))
 			return content1.equals(content2);
-		// Following lines of code have been added to manage automatic int conversion done for locationPid 
-		// and categoryPid attributes by jaxb parser 
+		// Following lines of code have been added to manage automatic int
+		// conversion done for locationPid
+		// and categoryPid attributes by jaxb parser
 		else if (content1 instanceof String)
 			return content1.equals(content2.toString());
 		else if (content2 instanceof String)
 			return content2.equals(content1.toString());
-		else 
+		else
 			return false;
 	}
 
@@ -87,8 +87,7 @@ public class HapContentInstancesQueue {
 	}
 
 	public synchronized void addContentInstance(ContentInstance contentInstance) {
-		if (filterEqualContent && contentInstancesList.size() == 0
-				&& compareContentInstances(lastCreatedContentInstance, contentInstance))
+		if (filterEqualContent && contentInstancesList.size() == 0 && compareContentInstances(lastCreatedContentInstance, contentInstance))
 			return;
 		if (filterEqualContent && contentInstancesList.size() > 0) {
 			deleteInitialDuplicatedContentInstances(contentInstance);

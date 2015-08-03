@@ -23,7 +23,7 @@ import org.energy_home.jemma.ah.hac.IServiceCluster;
 
 public class ApplianceProxy {
 	private static final long TEN_YEARS_IN_MILLISECS = 10 * 365 * 24 * 3600 * 1000;
-	
+
 	private IApplicationEndPoint applicationEndPoint;
 	private IAppliance appliance;
 	private IEndPointRequestContext lastReadRequestContext = null;
@@ -31,29 +31,29 @@ public class ApplianceProxy {
 	private void setApplicationEndPoint(IApplicationEndPoint applicationEndPoint) {
 		this.applicationEndPoint = applicationEndPoint;
 	}
-	
+
 	private void setAppliance(IAppliance appliance) {
 		this.appliance = appliance;
 	}
-	
-	public ApplianceProxy (IApplicationEndPoint applicationEndPoint, IAppliance appliance) {
+
+	public ApplianceProxy(IApplicationEndPoint applicationEndPoint, IAppliance appliance) {
 		this.setApplicationEndPoint(applicationEndPoint);
 		this.setAppliance(appliance);
 		if (applicationEndPoint != null)
 			lastReadRequestContext = applicationEndPoint.getRequestContext(true, TEN_YEARS_IN_MILLISECS);
 	}
-	
+
 	public IEndPointRequestContext getApplicationRequestContext() {
 		if (applicationEndPoint == null)
 			return null;
 		else
 			return applicationEndPoint.getDefaultRequestContext();
 	}
-	
+
 	public IEndPointRequestContext getLastReadApplicationRequestContext() {
 		return lastReadRequestContext;
 	}
-	
+
 	public IEndPointRequestContext getApplicationRequestContext(Boolean isConfirmationRequired) {
 		if (applicationEndPoint == null)
 			return null;
@@ -67,15 +67,15 @@ public class ApplianceProxy {
 		else
 			return applicationEndPoint.getRequestContext(isConfirmationRequired, maxAgeForAttributeValues);
 	}
-	
+
 	public IAppliance getAppliance() {
 		return appliance;
 	}
-	
+
 	public IEndPoint getEndPoint(int endPointId) {
 		return appliance.getEndPoint(endPointId);
 	}
-	
+
 	public IServiceCluster getServiceCluster(int endPointId, String clusterName) {
 		IEndPoint endPoint = appliance.getEndPoint(endPointId);
 		if (endPoint == null)

@@ -27,17 +27,15 @@ import org.energy_home.jemma.ah.hac.IServiceCluster;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 import org.energy_home.jemma.shal.DeviceConfiguration.DeviceCategory;
 
-
 public class MeteringClusterProxy extends ServiceClusterProxy implements SimpleMeteringClient {
 	public static float interpretFormatting(short formatting) {
 		int decimals = formatting & 0x7;
-		if (decimals > 0) return (float)(1000 / Math.pow(10, decimals));
+		if (decimals > 0)
+			return (float) (1000 / Math.pow(10, decimals));
 		return 1000;
 	}
-	
-	public MeteringClusterProxy(ApplianceProxyList applianceProxyList,
-			AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+
+	public MeteringClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -59,32 +57,30 @@ public class MeteringClusterProxy extends ServiceClusterProxy implements SimpleM
 			DeviceCategory deviceCategory = null;
 			if (endPoint.getType().equals(IEndPointTypes.ZIGBEE_METERING_DEVICE))
 				deviceCategory = ahm2mHapService.getDeviceCategory(appliance.getPid(), endPointId);
-			SimpleMeteringServer simpleMeteringServer = (SimpleMeteringServer)endPoint.getServiceCluster(SimpleMeteringServer.class.getName()); 
+			SimpleMeteringServer simpleMeteringServer = (SimpleMeteringServer) endPoint.getServiceCluster(SimpleMeteringServer.class.getName());
 			if (simpleMeteringServer != null) {
-				if (attributeName.equals(SimpleMeteringServer.ATTR_CurrentSummationDelivered_NAME) ||
-						attributeName.equals(SimpleMeteringServer.ATTR_CurrentSummationReceived_NAME)) {
+				if (attributeName.equals(SimpleMeteringServer.ATTR_CurrentSummationDelivered_NAME) || attributeName.equals(SimpleMeteringServer.ATTR_CurrentSummationReceived_NAME)) {
 					try {
-						short summationFormatting = simpleMeteringServer.getSummationFormatting(applianceProxy.getLastReadApplicationRequestContext());			
-						Double energy = interpretFormatting(summationFormatting)*((Long)value).doubleValue(); 
+						short summationFormatting = simpleMeteringServer.getSummationFormatting(applianceProxy.getLastReadApplicationRequestContext());
+						Double energy = interpretFormatting(summationFormatting) * ((Long) value).doubleValue();
 						return energy;
 					} catch (Exception e) {
 						LOG.error("Error while reading summation formatting for appliance " + applianceProxy.getAppliance().getPid() + ", endPoint " + endPointId, e);
 					}
-				} else if (attributeName.equals(SimpleMeteringServer.ATTR_IstantaneousDemand_NAME) 
-						&& (deviceCategory == null || deviceCategory != DeviceCategory.ProductionMeter)){
+				} else if (attributeName.equals(SimpleMeteringServer.ATTR_IstantaneousDemand_NAME) && (deviceCategory == null || deviceCategory != DeviceCategory.ProductionMeter)) {
 					try {
-						short demandFormatting = simpleMeteringServer.getDemandFormatting(applianceProxy.getLastReadApplicationRequestContext());			
-						Float power = interpretFormatting(demandFormatting)*((Integer)value).floatValue(); 
+						short demandFormatting = simpleMeteringServer.getDemandFormatting(applianceProxy.getLastReadApplicationRequestContext());
+						Float power = interpretFormatting(demandFormatting) * ((Integer) value).floatValue();
 						return power;
 					} catch (Exception e) {
-						LOG.error("Error while reading demand formatting for appliance " + applianceProxy.getAppliance().getPid()  + ", endPoint " + endPointId, e);
+						LOG.error("Error while reading demand formatting for appliance " + applianceProxy.getAppliance().getPid() + ", endPoint " + endPointId, e);
 					}
 				}
 			}
 		}
 		return value;
 	}
-	
+
 	public void notifyAttributeValue(String appliancePid, int endPointId, String clusterName, String attributeName, long timestamp, Object value, boolean isBatch) {
 
 	}
@@ -104,21 +100,21 @@ public class MeteringClusterProxy extends ServiceClusterProxy implements SimpleM
 				try {
 					av = serviceCluster.getLastNotifiedAttributeValue(SimpleMeteringServer.ATTR_CurrentSummationDelivered_NAME, context);
 					if (av != null && av.getValue() != null) {
-						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), 
-								SimpleMeteringServer.ATTR_CurrentSummationDelivered_NAME, av.getTimestamp(), av.getValue(), true);
+						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), SimpleMeteringServer.ATTR_CurrentSummationDelivered_NAME,
+								av.getTimestamp(), av.getValue(), true);
 					}
 					av = serviceCluster.getLastNotifiedAttributeValue(SimpleMeteringServer.ATTR_IstantaneousDemand_NAME, context);
 					if (av != null && av.getValue() != null) {
-						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), 
-								SimpleMeteringServer.ATTR_IstantaneousDemand_NAME, av.getTimestamp(), av.getValue(), true);
+						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), SimpleMeteringServer.ATTR_IstantaneousDemand_NAME,
+								av.getTimestamp(), av.getValue(), true);
 					}
 					av = serviceCluster.getLastNotifiedAttributeValue(SimpleMeteringServer.ATTR_CurrentSummationReceived_NAME, context);
 					if (av != null && av.getValue() != null) {
-						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), 
-								SimpleMeteringServer.ATTR_CurrentSummationReceived_NAME, av.getTimestamp(), av.getValue(), true);
+						notifyAttributeValue(appliancePid, eps[j].getId(), SimpleMeteringServer.class.getName(), SimpleMeteringServer.ATTR_CurrentSummationReceived_NAME,
+								av.getTimestamp(), av.getValue(), true);
 					}
 				} catch (Exception e) {
-					LOG.error("Error while reading last notified simple metering attribute values for appliance " + appliance.getPid(),e);
+					LOG.error("Error while reading last notified simple metering attribute values for appliance " + appliance.getPid(), e);
 				}
 			}
 		}

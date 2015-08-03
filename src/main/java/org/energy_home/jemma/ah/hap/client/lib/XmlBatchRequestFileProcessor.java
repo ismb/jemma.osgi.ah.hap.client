@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class XmlBatchRequestFileProcessor {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(XmlBatchRequestFileProcessor.class);
 
 	private static void execute(String inputDir, String outputDir) {
@@ -36,9 +36,8 @@ public class XmlBatchRequestFileProcessor {
 			inputDir = "./";
 		File inputFileDir = new File(inputDir);
 		File outputFileDir = new File(outputDir);
-		
-		LOG.info("Processing files:\ninput dir: " + inputFileDir.getAbsolutePath() + "\noutput dir: "
-				+ outputFileDir.getAbsolutePath());
+
+		LOG.info("Processing files:\ninput dir: " + inputFileDir.getAbsolutePath() + "\noutput dir: " + outputFileDir.getAbsolutePath());
 		if (inputFileDir.isDirectory()) {
 			File[] files = inputFileDir.listFiles();
 			String fileName = null;

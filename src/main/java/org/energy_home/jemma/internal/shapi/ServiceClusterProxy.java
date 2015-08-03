@@ -15,7 +15,6 @@
  */
 package org.energy_home.jemma.internal.shapi;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.energy_home.jemma.ah.cluster.ah.ConfigServer;
@@ -33,18 +32,18 @@ import org.energy_home.jemma.ah.hap.client.AHContainers;
 import org.energy_home.jemma.m2m.ContentInstance;
 import org.energy_home.jemma.m2m.ContentInstanceItems;
 
-public  class ServiceClusterProxy extends ServiceCluster {
+public class ServiceClusterProxy extends ServiceCluster {
 	private static final String CORE_CLUSTERS_ATTRIBUTE_ID_PREFIX = "ah.cluster.ah";
 	private static final String CORE_CLUSTERS_ATTRIBUTE_NAME_PREFIX = "org.energy_home.jemma.ah.cluster.ah";
 	private static final String TELECOMITALIA_PACKAGE_PREFIX = "org.energy_home.jemma.";
-	
-	protected static final Logger LOG = LoggerFactory.getLogger( ServiceClusterProxy.class );
-	
+
+	protected static final Logger LOG = LoggerFactory.getLogger(ServiceClusterProxy.class);
+
 	public static boolean isAnUnconfirmedCommand(AHContainerAddress containerAddress) {
-		//String containerName = containerAddress.getContainerName();
+		// String containerName = containerAddress.getContainerName();
 		return true;
 	}
-	
+
 	public static String[] getClusterAndAttributeNamesForNotCachedAttributes(AHContainerAddress containerAddress) {
 		String containerName = containerAddress.getContainerName();
 		String attributeName = null;
@@ -57,15 +56,15 @@ public  class ServiceClusterProxy extends ServiceCluster {
 		else if (containerName.equals(AHContainers.attrId_ah_cluster_applctrl_temperatureTarget1))
 			attributeName = ApplianceControlServer.ATTR_TemperatureTarget1_NAME;
 		if (attributeName != null)
-			return new String[] {ApplianceControlServer.class.getName(), attributeName};
-			else
-		return null;
+			return new String[] { ApplianceControlServer.class.getName(), attributeName };
+		else
+			return null;
 	}
-	
+
 	protected AHM2MHapService ahm2mHapService;
 	protected ApplianceProxyList applianceProxyList;
 	protected ISubscriptionManager subscriptionManager;
-	
+
 	private void manageSubscriptions(String appliancePid, Integer endPointId, String attributeId, ContentInstance ci) {
 		if (subscriptionManager.checkActiveSubscriptions()) {
 			ContentInstanceItems cisItems = new ContentInstanceItems();
@@ -73,8 +72,8 @@ public  class ServiceClusterProxy extends ServiceCluster {
 			cisItems.getContentInstances().add(ci);
 			subscriptionManager.notifyContentInstanceItems(cisItems);
 		}
-	}	
-	
+	}
+
 	private String getAttributeId(String clusterName, String attributeName) {
 		if (clusterName == null || clusterName.equals("")) {
 			return attributeName;
@@ -83,62 +82,62 @@ public  class ServiceClusterProxy extends ServiceCluster {
 			return attributeId.substring(TELECOMITALIA_PACKAGE_PREFIX.length());
 		} else {
 			return getAttributeId(attributeName);
-		}		
+		}
 	}
-	
+
 	protected String getAttributeId(String attributeName) {
 		return null;
 	}
-	
+
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeId, Object value) {
 		return value;
 	}
-	
-	public ServiceClusterProxy (ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
+
+	public ServiceClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager) throws ApplianceException {
 		super();
 		this.applianceProxyList = applianceProxyList;
 		this.ahm2mHapService = ahm2mHapService;
 		this.subscriptionManager = subscriptionManager;
 	}
-	
-	public void initServiceCluster(ApplianceProxy applianceProxy) {	
+
+	public void initServiceCluster(ApplianceProxy applianceProxy) {
 	}
-	
-	public void checkServiceCluster(ApplianceProxy applianceProxy) {		
+
+	public void checkServiceCluster(ApplianceProxy applianceProxy) {
 	}
-	
+
 	public ContentInstance execCommand(String appliancePid, int endPointId, String containerName, ContentInstance ci) throws ApplianceException, ServiceClusterException {
 		return null;
 	}
-	
+
 	public final void sendAttributeValue(String appliancePid, int endPointId, String clusterName, String attributeName, long timestamp, Object value, boolean batchRequest) {
 		try {
 			String attributeId = getAttributeId(clusterName, attributeName);
 			if (attributeId == null) {
 				LOG.debug("Received attribute value for unexported attribute: " + clusterName + ", " + attributeName);
 			} else {
-				Object decodedValue = decodeAttributeValue(appliancePid, endPointId, attributeName, value);	
+				Object decodedValue = decodeAttributeValue(appliancePid, endPointId, attributeName, value);
 				sendAttributeValue(appliancePid, endPointId, attributeId, timestamp, decodedValue, batchRequest);
 			}
 		} catch (Exception e) {
 			LOG.error("Error in notifyAttributeValue for appliance " + appliancePid, e);
 		}
 	}
-	
+
 	public final void sendAttributeValue(String appliancePid, int endPointId, String attributeId, long timestamp, Object value, boolean batchRequest) throws HacException {
-		ContentInstance ci = ahm2mHapService.sendAttributeValue(appliancePid, endPointId, attributeId, timestamp, value, batchRequest);	
-		manageSubscriptions(appliancePid, endPointId, attributeId, ci);	
+		ContentInstance ci = ahm2mHapService.sendAttributeValue(appliancePid, endPointId, attributeId, timestamp, value, batchRequest);
+		manageSubscriptions(appliancePid, endPointId, attributeId, ci);
 	}
-	
+
 	public final void notifyAttributeValue(String attributeName, IAttributeValue attributeValue, IEndPointRequestContext endPointRequestContext) {
 		try {
 			IEndPoint peerEndPoint = endPointRequestContext.getPeerEndPoint();
 			String appliancePid = peerEndPoint.getAppliance().getPid();
 			int endPointId = peerEndPoint.getId();
-			sendAttributeValue(appliancePid, endPointId, HacCommon.getPeerClusterName(getName()), attributeName, attributeValue.getTimestamp(), attributeValue.getValue(), true);		
+			sendAttributeValue(appliancePid, endPointId, HacCommon.getPeerClusterName(getName()), attributeName, attributeValue.getTimestamp(), attributeValue.getValue(), true);
 		} catch (Exception e) {
 			LOG.error("notifyAttributeValue error", e);
 		}
 	}
-	
+
 }

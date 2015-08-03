@@ -32,21 +32,21 @@ public class AALContainers {
 	// MF 14/1/2013 added on off and illumination status management
 	public static final String attrId_ah_aal_onoffstatus = "ah.aal.onoffstatus";
 	public static final String attrId_ah_aal_illumstatus = "ah.aal.illuminance";
-	
+
 	static {
 		Map<String, Class<?>> attributeIdsMap = new HashMap<String, Class<?>>(2);
 		attributeIdsMap.put(attrId_ah_aal_doorstatus, Boolean.class);
 		attributeIdsMap.put(attrId_ah_aal_presence, Boolean.class);
 		attributeIdsMap.put(attrId_ah_aal_tempstatus, Float.class);
-		
+
 		attributeIdsMap.put(attrId_ah_aal_batteryvoltage, Float.class);
 		attributeIdsMap.put(attrId_ah_aal_waterstatus, Boolean.class);
 
 		attributeIdsMap.put(attrId_ah_aal_onoffstatus, Boolean.class);
 		attributeIdsMap.put(attrId_ah_aal_illumstatus, Integer.class);
-		
+
 		attrIdsClassMap = Collections.unmodifiableMap(attributeIdsMap);
-}
+	}
 
 	// see org.energy_home.jemma.ah.eh.EHContainers, same code ;
 	public static Class<?> getAttributeIdClass(String attributeId) {

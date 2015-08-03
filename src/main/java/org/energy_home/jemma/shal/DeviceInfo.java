@@ -15,14 +15,15 @@
  */
 package org.energy_home.jemma.shal;
 
-public interface DeviceInfo {	
+public interface DeviceInfo {
 	public String getEndPointId();
-	
-	// Persistent device identifier in the framework (can be used to replace a faulty device with a new one)
+
+	// Persistent device identifier in the framework (can be used to replace a
+	// faulty device with a new one)
 	public String getPersistentId();
-	
+
 	public DeviceDescriptor getDescriptor();
-	
+
 	public DeviceConfiguration getConfiguration();
 
 }

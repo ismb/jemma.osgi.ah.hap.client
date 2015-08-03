@@ -17,16 +17,19 @@ package org.energy_home.jemma.shal;
 
 // ***** OSGi service associated to a Device exposed in the OSGi framework (a device service could be exposed also by a server application)
 public interface DeviceService extends EndPoint {
-	// Mandatory property for the end point associated OSGi service (DeviceService and DeviceServiceListener)
+	// Mandatory property for the end point associated OSGi service
+	// (DeviceService and DeviceServiceListener)
 	public static final String DEVICE_TYPE_PROPERTY = "shal.device.type";
-	
-	// Mandatory property for the device associated OSGi service (DeviceService and DeviceServiceListener)
+
+	// Mandatory property for the device associated OSGi service (DeviceService
+	// and DeviceServiceListener)
 	public static final String DEVICE_NETWORK_TYPE_PROPERTY = "shal.device.network";
 
-	// Mandatory property for the end point associated OSGi service (DeviceService and DeviceServiceListener)
+	// Mandatory property for the end point associated OSGi service
+	// (DeviceService and DeviceServiceListener)
 	public static final String DEVICE_INTERFACE_TYPES_PROPERTY = "shal.device.interfaces";
-	
+
 	public DeviceInterface[] getDeviceInterfaces();
-	
+
 	public DeviceInterface getDeviceInterface(Class<? extends DeviceInterface> clazz);
 }

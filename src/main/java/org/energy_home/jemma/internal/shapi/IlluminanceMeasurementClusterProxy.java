@@ -20,10 +20,9 @@ import org.energy_home.jemma.ah.cluster.zigbee.measurement.IlluminanceMeasuremen
 import org.energy_home.jemma.ah.hac.ApplianceException;
 import org.energy_home.jemma.ah.hap.client.AHContainers;
 
-
 public class IlluminanceMeasurementClusterProxy extends ServiceClusterProxy implements IlluminanceMeasurementClient {
-	public IlluminanceMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService,
-			ISubscriptionManager subscriptionManager) throws ApplianceException {
+	public IlluminanceMeasurementClusterProxy(ApplianceProxyList applianceProxyList, AHM2MHapService ahm2mHapService, ISubscriptionManager subscriptionManager)
+			throws ApplianceException {
 		super(applianceProxyList, ahm2mHapService, subscriptionManager);
 	}
 
@@ -35,8 +34,8 @@ public class IlluminanceMeasurementClusterProxy extends ServiceClusterProxy impl
 
 	protected Object decodeAttributeValue(String appliancePid, int endPointId, String attributeName, Object value) {
 		if (attributeName.equals(IlluminanceMeasurementServer.ATTR_MeasuredValue_NAME)) {
-			//TODO:!!! to be tested
-			int intValue = 10^((((Integer)value).intValue()-1)/10000);
+			// TODO:!!! to be tested
+			int intValue = 10 ^ ((((Integer) value).intValue() - 1) / 10000);
 			return new Integer(intValue);
 		}
 		return value;

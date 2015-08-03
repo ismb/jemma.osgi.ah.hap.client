@@ -15,7 +15,6 @@
  */
 package org.energy_home.jemma.internal.shapi;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -37,10 +36,10 @@ import org.energy_home.jemma.m2m.M2MConstants;
 import org.energy_home.jemma.shal.DeviceConfiguration.DeviceCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+
 public class AHM2MHapService {
-	private static final Logger LOG = LoggerFactory.getLogger( AHM2MHapService.class );
-	
+	private static final Logger LOG = LoggerFactory.getLogger(AHM2MHapService.class);
+
 	static boolean isHapServiceAvailable() {
 		try {
 			Class clazz = IM2MHapService.class;
@@ -49,9 +48,9 @@ public class AHM2MHapService {
 			return false;
 		}
 	}
-	
+
 	private M2MHapServiceObject m2mHapService = null;
-	
+
 	private List toAttributeValueList(ContentInstanceItems cis) {
 		if (cis == null)
 			return null;
@@ -63,22 +62,22 @@ public class AHM2MHapService {
 		}
 		return result;
 	}
-	
+
 	private Map toAttributeValueMap(ContentInstanceItemsList cisList) {
 		if (cisList == null)
 			return null;
-		List itemsList =  cisList.getContentInstanceItems();
+		List itemsList = cisList.getContentInstanceItems();
 		Map result = new HashMap(itemsList.size());
 		ContentInstanceItems items = null;
 		AHContainerAddress containerId = null;
 		for (Iterator iterator = itemsList.iterator(); iterator.hasNext();) {
 			items = (ContentInstanceItems) iterator.next();
 			containerId = AHContainerAddress.getAddressFromUrl(items.getAddressedId());
-			result.put(containerId.getAppliancePid(), toAttributeValueList(items));	
+			result.put(containerId.getAppliancePid(), toAttributeValueList(items));
 		}
 		return result;
 	}
-	
+
 	public AHM2MHapService(IM2MHapService hapService) {
 		this.m2mHapService = (M2MHapServiceObject) hapService;
 	}
@@ -87,10 +86,10 @@ public class AHM2MHapService {
 		ContentInstance epCategoryCi = getLocalContentInstance(appliancePid, endPointId, AHContainers.attrId_ah_core_config_category);
 		if (epCategoryCi == null)
 			return null;
-		Integer categoryPid = (Integer)epCategoryCi.getContent();
+		Integer categoryPid = (Integer) epCategoryCi.getContent();
 		if (DeviceCategory.values().length >= categoryPid.intValue())
-			return categoryPid == null ? null : DeviceCategory.values()[categoryPid.intValue()-1];
-		else 
+			return categoryPid == null ? null : DeviceCategory.values()[categoryPid.intValue() - 1];
+		else
 			return DeviceCategory.Other;
 	}
 
@@ -105,15 +104,15 @@ public class AHM2MHapService {
 	public AHContainerAddress getLocalContainerAddress(String containerName) {
 		return m2mHapService.getLocalContainerAddress(containerName);
 	}
-	
+
 	public AHContainerAddress getLocalContainerAddress(String appliancePid, String endPointId, String containerName) {
 		return m2mHapService.getLocalContainerAddress(appliancePid, endPointId, containerName);
 	}
-	
+
 	public AHContainerAddress getLocalContainerAddress(String appliancePid, Integer endPointId, String containerName) {
 		return m2mHapService.getLocalContainerAddress(appliancePid, endPointId, containerName);
 	}
-	
+
 	public ContentInstance getLocalContentInstance(AHContainerAddress containerAddress) throws M2MHapException {
 		return m2mHapService.getLocalContentInstance(containerAddress);
 	}
@@ -121,12 +120,11 @@ public class AHM2MHapService {
 	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddress) throws M2MHapException {
 		return m2mHapService.getLocalContentInstanceItemsList(containerAddress);
 	}
-	
-	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddress, long startInstanceId,
-			long endInstanceId) throws M2MHapException {
+
+	public ContentInstanceItemsList getLocalContentInstanceItemsList(AHContainerAddress containerAddress, long startInstanceId, long endInstanceId) throws M2MHapException {
 		return m2mHapService.getLocalContentInstanceItemsList(containerAddress, startInstanceId, endInstanceId);
 	}
-	
+
 	public ContentInstance sendAttributeValue(String attributeId, long timestamp, Object value, boolean batchRequest) throws HacException {
 		return sendAttributeValue(null, null, attributeId, timestamp, value, batchRequest);
 	}
@@ -139,10 +137,10 @@ public class AHM2MHapService {
 		AHContainerAddress containerId = m2mHapService.getLocalContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 		if (containerId == null)
 			return null;
-		else 
-			return containerId.getUrl()+M2MConstants.URL_CONTENT_INSTANCES;				
+		else
+			return containerId.getUrl() + M2MConstants.URL_CONTENT_INSTANCES;
 	}
-	
+
 	public ContentInstance getLocalContentInstance(String appliancePid, Integer endPointId, String attributeId) {
 		AHContainerAddress containerId = m2mHapService.getLocalContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 		if (containerId == null)
@@ -154,9 +152,8 @@ public class AHM2MHapService {
 				return null;
 			}
 	}
-	
-	public ContentInstance sendAttributeValue(String appliancePid, Integer endPointId, String attributeId,
-			long timestamp, Object value, boolean batchRequest) throws HacException {
+
+	public ContentInstance sendAttributeValue(String appliancePid, Integer endPointId, String attributeId, long timestamp, Object value, boolean batchRequest) throws HacException {
 		try {
 			AHContainerAddress containerId = m2mHapService.getHagContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 			if (batchRequest)
@@ -166,12 +163,11 @@ public class AHM2MHapService {
 		} catch (Exception e) {
 			LOG.error("sendAttributeValue error", e);
 			throw new HacException("sendAttributeValue error");
-		}	
+		}
 	}
-	
-	public void sendAttributeValue(String appliancePid, Integer endPointId, String attributeId,
-			IAttributeValue attributeValue, boolean batchRequest) throws HacException {
-		sendAttributeValue(appliancePid, endPointId, attributeId, attributeValue.getTimestamp(), attributeValue.getValue(), batchRequest);	
+
+	public void sendAttributeValue(String appliancePid, Integer endPointId, String attributeId, IAttributeValue attributeValue, boolean batchRequest) throws HacException {
+		sendAttributeValue(appliancePid, endPointId, attributeId, attributeValue.getTimestamp(), attributeValue.getValue(), batchRequest);
 	}
 
 	public ContentInstance storeAttributeValue(String attributeId, long timestamp, Object value, boolean sync) throws HacException {
@@ -182,24 +178,21 @@ public class AHM2MHapService {
 		return storeAttributeValue(null, null, attributeId, attributeValue.getTimestamp(), attributeValue.getValue(), sync);
 	}
 
-	public ContentInstance storeAttributeValue(String appliancePid, Integer endPointId, String attributeId,
-			long timestamp, Object value, boolean sync) throws HacException {
+	public ContentInstance storeAttributeValue(String appliancePid, Integer endPointId, String attributeId, long timestamp, Object value, boolean sync) throws HacException {
 		try {
 			AHContainerAddress containerId = m2mHapService.getHagContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 			return m2mHapService.createContentInstanceQueued(containerId, timestamp, value, sync);
 		} catch (Exception e) {
 			LOG.error("storeAttributeValue error", e);
 			throw new HacException("storeAttributeValue error");
-		}		
+		}
 	}
 
-	public ContentInstance storeAttributeValue(String appliancePid, Integer endPointId, String attributeId,
-			IAttributeValue attributeValue, boolean sync) throws HacException {
+	public ContentInstance storeAttributeValue(String appliancePid, Integer endPointId, String attributeId, IAttributeValue attributeValue, boolean sync) throws HacException {
 		return storeAttributeValue(appliancePid, endPointId, attributeId, attributeValue.getTimestamp(), attributeValue.getValue(), sync);
 	}
 
-	public IAttributeValue getLastestAttributeValue(String appliancePid, Integer endPointId, String attributeId)
-			throws HacException {
+	public IAttributeValue getLastestAttributeValue(String appliancePid, Integer endPointId, String attributeId) throws HacException {
 		try {
 			AHContainerAddress containerId = m2mHapService.getHagContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 			ContentInstance ci = m2mHapService.getLatestContentInstance(containerId);
@@ -207,15 +200,14 @@ public class AHM2MHapService {
 		} catch (Exception e) {
 			LOG.error("getLastestAttributeValue error", e);
 			throw new HacException("getLastestAttributeValue error");
-		}	
+		}
 	}
 
 	public IAttributeValue getLastestAttributeValue(String attributeId) throws HacException {
 		return getLastestAttributeValue(null, null, attributeId);
 	}
 
-	public IAttributeValue getOldestAttributeValue(String appliancePid, Integer endPointId, String attributeId)
-			throws HacException {
+	public IAttributeValue getOldestAttributeValue(String appliancePid, Integer endPointId, String attributeId) throws HacException {
 		try {
 			AHContainerAddress containerId = m2mHapService.getHagContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);
 			ContentInstance ci = m2mHapService.getOldestContentInstance(containerId);
@@ -229,11 +221,11 @@ public class AHM2MHapService {
 	public IAttributeValue getOldestAttributeValue(String attributeId) throws HacException {
 		return getOldestAttributeValue(null, null, attributeId);
 	}
-	
+
 	public IAttributeValue getAttributeValue(String attributeId, long timestamp) throws HacException {
 		return getAttributeValue(null, null, attributeId, timestamp);
 	}
-	
+
 	public IAttributeValue getAttributeValue(String appliancePid, Integer endPointId, String attributeId, long timestamp) throws HacException {
 		try {
 			AHContainerAddress containerId = m2mHapService.getHagContainerAddress(appliancePid, (endPointId != null ? endPointId.toString() : null), attributeId);

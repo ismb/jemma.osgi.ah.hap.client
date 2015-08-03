@@ -16,26 +16,25 @@
 package org.energy_home.jemma.shal;
 
 public interface DeviceConfiguration {
-	// Optional property for the end point associated to a device (suggested by driver or application)
+	// Optional property for the end point associated to a device (suggested by
+	// driver or application)
 	public static final String DEVICE_NICKNAME_PROPERTY = "shal.device.nickname";
-	
-	// Optional property for the end point associated to a device (suggested by driver or application)
+
+	// Optional property for the end point associated to a device (suggested by
+	// driver or application)
 	public static final String DEVICE_CATEGORY_PROPERTY = "shal.device.category";
-	
-	// Optional property for the end point associated to a device (suggested by driver or application)
+
+	// Optional property for the end point associated to a device (suggested by
+	// driver or application)
 	public static final String DEVICE_LOCATION_PROPERTY = "shal.device.location";
-	
-	public enum DeviceCategory {		
-		Other, Lamp, WaterHeater, TV, PC, Oven, Iron, Refrigerator, DishWasher,
-		AirConditioner, WashingMachine, Meter, JollySmartPlug, ProductionMeter, SecondaryMeter,
-		Printer, ModemRouter, DecoderRecorderPlayer, HomeTheatreStereo, PlayStation, MediaCenter,
-		Freezer, WasherDryer, VacuumCleaner, HairDryer, BreadMachine, CoffeeMachine, Toaster,
-		FoodRobot, WaterPurifier, Hob, ElectricHeater, SwimmingPoolPump, Hood
+
+	public enum DeviceCategory {
+		Other, Lamp, WaterHeater, TV, PC, Oven, Iron, Refrigerator, DishWasher, AirConditioner, WashingMachine, Meter, JollySmartPlug, ProductionMeter, SecondaryMeter, Printer, ModemRouter, DecoderRecorderPlayer, HomeTheatreStereo, PlayStation, MediaCenter, Freezer, WasherDryer, VacuumCleaner, HairDryer, BreadMachine, CoffeeMachine, Toaster, FoodRobot, WaterPurifier, Hob, ElectricHeater, SwimmingPoolPump, Hood
 	}
-	
+
 	public String getNickname();
-	
+
 	public DeviceCategory getCategory();
-	
+
 	public DeviceLocation getLocation();
 }

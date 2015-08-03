@@ -17,9 +17,9 @@ package org.energy_home.jemma.ah.hap.client.lib;
 
 public interface M2MHapServiceListener {
 	public void serviceReset();
-	
+
 	public void hagConnected();
-	
+
 	public void hagDisconnected();
-	
+
 }

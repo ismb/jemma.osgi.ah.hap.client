@@ -20,24 +20,24 @@ import java.util.Map;
 
 public class ApplianceProxyList {
 	private Map<String, ApplianceProxy> applianceProxyMap = new HashMap();
-	
+
 	public ApplianceProxy getApplianceProxy(String appliancePid) {
 		return applianceProxyMap.get(appliancePid);
 	}
-	
+
 	public ApplianceProxy addApplianceProxy(ApplianceProxy applianceProxy) {
 		return applianceProxyMap.put(applianceProxy.getAppliance().getPid(), applianceProxy);
 	}
-	
+
 	public ApplianceProxy removeApplianceProxy(String appliancePid) {
 		return applianceProxyMap.remove(appliancePid);
 	}
-	
+
 	public void clear() {
 		applianceProxyMap.clear();
 	}
-	
-	public ApplianceProxy[] getApplianceProxyArray() {		
+
+	public ApplianceProxy[] getApplianceProxyArray() {
 		ApplianceProxy[] result = new ApplianceProxy[applianceProxyMap.size()];
 		applianceProxyMap.values().toArray(result);
 		return result;
