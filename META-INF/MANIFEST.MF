@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1438014191856
-Build-Jdk: 1.7.0_45
-Built-By: bluewind
+Bnd-LastModified: 1438598103770
+Build-Jdk: 1.8.0_45
+Built-By: tomasi
 Bundle-Activator: org.energy_home.jemma.osgi.ah.hap.client.HapCoreServic
  e
 Bundle-Category: Automation@Home
@@ -39,8 +39,8 @@ Import-Package: org.energy_home.jemma.ah.cluster.zigbee.eh;version="[3.1
  er.zigbee.measurement;version="[3.0,4)",org.energy_home.jemma.ah.cluste
  r.zigbee.security;version="[3.0,4)",org.energy_home.jemma.ah.hac.lib;ve
  rsion="[3.0,4)",org.energy_home.jemma.shal,org.energy_home.jemma.utils.
- rest;version="[1.0,2)",javax.servlet.resources;version="[2.5,3)",org.ap
- ache.commons.codec.binary,org.apache.http.client;version="[4.1,5)"
+ rest;version="[1.0,2)",org.apache.http.client;version="[4.1,5)",org.apa
+ che.commons.codec.binary,javax.servlet.resources;version="[2.5,3)"
 Require-Bundle: jemma.osgi.ah.hac.lib
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
 Service-Component: OSGI-INF/*.xml

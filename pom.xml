@@ -23,7 +23,7 @@
 	<groupId>org.energy-home</groupId>
 	<artifactId>jemma.osgi.ah.hap.client</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.2.16</version>
+	<version>1.2.17</version>
 	<name>Hap Client</name>
 
 	<properties>
@@ -75,6 +75,7 @@
 						<Bundle-Name>${project.name}</Bundle-Name>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Require-Bundle>jemma.osgi.ah.hac.lib</Require-Bundle>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Import-Package>org.energy_home.jemma.ah.cluster.zigbee.eh;version="[3.1.0,3.2.0)",
 							 org.energy_home.jemma.ah.cluster.zigbee.general;version="[3.1.0,3.2.0)",
 							 org.energy_home.jemma.ah.cluster.zigbee.metering;version="[3.1.0,3.2.0)",
@@ -110,11 +111,20 @@
 						<Bundle-Activator>org.energy_home.jemma.osgi.ah.hap.client.HapCoreService</Bundle-Activator>
 						<Service-Component>OSGI-INF/*.xml</Service-Component>
 						<Bundle-Vendor>Telecom Italia</Bundle-Vendor>
-						<Bundle-Category>Automation@Home</Bundle-Category>
+						<Bundle-Category>JEMMA Automation@Home</Bundle-Category>
 						<Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>
+			<!-- to launch: mvn java-formatter:format -->
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<version>0.4</version>
+				<configuration>
+					<configFile>${project.basedir}/src/main/resources/formatter.xml</configFile>
+				</configuration>
+			</plugin>			
 		</plugins>
 	</build>
 	<repositories>
