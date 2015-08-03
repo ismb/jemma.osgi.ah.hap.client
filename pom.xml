@@ -28,10 +28,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
 		<!-- Internal dependencies version properties -->
-		<org.energy-home.jemma.osgi.ah.hac.lib.version>3.1.5</org.energy-home.jemma.osgi.ah.hac.lib.version>
-		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.16</org.energy-home.jemma.osgi.ah.m2m.device.version>
-		<org.energy-home.jemma.osgi.utils.version>1.0.7</org.energy-home.jemma.osgi.utils.version>
+		<org.energy-home.jemma.osgi.ah.hac.lib.version>3.1.6</org.energy-home.jemma.osgi.ah.hac.lib.version>
+		<org.energy-home.jemma.osgi.ah.m2m.device.version>1.2.17</org.energy-home.jemma.osgi.ah.m2m.device.version>
+		<org.energy-home.jemma.osgi.utils.version>1.0.8</org.energy-home.jemma.osgi.utils.version>
 					
 		<!-- External dependencies version properties -->	
 		<javax.servlet2.version>2.5.0</javax.servlet2.version>
